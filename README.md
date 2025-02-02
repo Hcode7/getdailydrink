@@ -24,5 +24,5 @@ You need to have the following installed on your system:
 First, clone the project repository to your local machine.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/hydration_reminder.git
+git clone https://github.com/Hcode7/getdailydrink.git
 cd hydration_reminder

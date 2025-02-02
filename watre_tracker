@@ -1,0 +1,83 @@
+import sqlite3
+def create_table():
+    conn = sqlite3.connect('water_tracker.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS user_data(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            gender TEXT NOT NULL,
+            age INTEGER NOT NULL,
+            location TEXT NOT NULL,
+            exercise TEXT NOT NULL,
+            water_amount REAL NOT NULL
+        )
+    ''')
+
+    conn.Commit()
+    conn.close()
+    print("Table created successfully")
+
+
+def store_data(gender, age, location, exercise, water_amount):
+    conn = sqlite3.connect('water_tracker.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        INSERT INTO user_data(gender, age, location, exercise, water_amount)
+        VALUES(?, ?, ?, ?, ?)
+    ''', (gender, age, location, exercise, water_amount))
+
+    conn.commit()
+    conn.close()
+    print("Data stored successfully")
+
+def get_all_data():
+    conn = sqlite3.connect('water_tracker.db')
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT * FROM user_data')
+    records = cursor.fetchall()
+
+    conn.close()
+    return records
+
+def collect_user_data():
+    print("\nPlease enter the following details:")
+    gender = input("Enter your gender (male/female/other): ").strip().lower()
+    age = input("Enter your age: ").strip()
+    location = input ("Enter your location type (e.g., tropical, desert, coastal); ").strip()
+    exercise = input ("Enter your exercise type (cardio, weights, none, etc.):").strip()
+    water_amount = float(input("Enter you daily water intake in liters: ").strip())
+
+    store_data(gender, age, location, exercise, water_amount)
+
+def display_data():
+    records = get_all_data()
+    if records:
+        print("\nStoredRecords:")
+        for record in records:
+            print(record)
+    else:
+        print("\nNo records found.")
+
+if __name__ == "__main__":
+
+    create_table()
+
+    while True:
+        print("\nChoose an option:")
+        print("1. Enter new user data")
+        print("2. View all stored data")
+        print("3. Exit")
+
+        choice = input("Enter your choice (1/2/3): ").strip()
+
+        if choice == '1':
+            collect_user_data()
+        elif choice == '2':
+            display_data()
+        elif choice == '3':
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
