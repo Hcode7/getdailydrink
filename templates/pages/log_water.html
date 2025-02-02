@@ -1,14 +1,131 @@
-
-
+{% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
-<div>
-    <form action="" method="post">
+
+<div class="container">
+
+  <!-- Background Section -->
+  <div class="background">
+
+    <br>
+    <div class="welcome-background">
+      
+    {% if total_water %}
+    <div id="result" class="result-container">
+        <h2>Your Recommended Daily Water Intake:</h2>
+        <p>{{ total_water }} liters</p>
+        <br>
+        <button type="button" id="stop-btn" class="btn" onclick="stopWaterReminder()">Stop Reminder</button>
+    </div>
+    {% endif %}
+    <br>
+      <h1>Welcome to getDailyDrink</h1>
+      <p>Please take your time to get your daily drink recommendation</p>
+      <button class="btn start-quiz">Start Quiz</button>
+    </div>
+    
+    {% if error %}
+    <script>
+      alert('{{ error }}')
+    </script>
+    {% endif %}
+
+    <!-- Water Intake Form -->
+    <form class="question-container" method="POST" action="{% url 'log_water' %}" id="water-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Calculate</button>
+      
+        <div class="question-group">
+          <label for="gender">What is your gender?</label>
+          <br><br>
+          {{ form.gender }}
+        </div>
+      
+        <div class="question-group">
+          <label for="age">What is your age?</label>
+          <br><br>
+          {{ form.age }}
+        </div>
+      
+        <div class="question-group">
+          <label for="activity-level">What is your activity level?</label>
+          <br><br>
+          {{ form.activity_level }}
+        </div>
+      
+        <div class="question-group">
+          <label for="climate">What is the climate like where you live?</label>
+          <br><br>
+          {{ form.climate }}
+        </div>
+      
+        <div class="question-group">
+          <label for="weight">What is your weight (in kg)?</label>
+          <br><br>
+          {{ form.weight }}
+        </div>
+      
+        <div class="question-group">
+          <label for="health-conditions">Do you have any health conditions?</label>
+          <br><br>
+          {{ form.health_conditions }}
+        </div>
+
+        <label for="reminder-interval">How often do you want a reminder?</label>
+        <select id="reminder-interval">
+            <option value="1">Every 1 hour</option>
+            <option value="2">Every 2 hours</option>
+            <option value="3">Every 3 hours</option>
+            <option value="5">Every 5 hours</option>
+        </select>
+        
+        <button type="submit" id="start-btn" class="btn" onclick="startWaterReminder()">Start Reminder</button>
+        
+        <button type="submit" class="btn">Submit</button>
     </form>
+    <br><br>
 
+    <script>
+      let reminderTimer; // Store the interval to stop the reminder
+
+      document.addEventListener("DOMContentLoaded", function() {
+          // Ask for notification permission when the page loads
+          if ("Notification" in window) {
+              Notification.requestPermission().then(permission => {
+                  if (permission !== "granted") {
+                      alert("Please allow notifications to receive reminders!");
+                  }
+              });
+          }
+      });
+
+      // Function to start water reminders
+      function startWaterReminder() {
+          let interval = document.getElementById("reminder-interval").value;
+          let timeMs = interval * 60 * 60 * 1000; // Convert hours to milliseconds
+      
+          if (Notification.permission === "granted") {
+              reminderTimer = setInterval(function() {
+                  new Notification("💧 Time to Drink Water!", {
+                      body: `Stay hydrated! It's time to drink water.`,
+                      icon: "https://cdn-icons-png.flaticon.com/512/2913/2913520.png" // Water icon
+                  });
+              }, timeMs);
+      
+              alert(`Water reminder set every ${interval} hour(s)!`);
+          } else {
+              alert("Please enable notifications to receive reminders.");
+          }
+      }
+
+      // Function to stop water reminders
+      function stopWaterReminder() {
+          clearInterval(reminderTimer);
+          alert("Water reminders stopped.");
+      }
+    </script>
+      
+  </div>
 </div>
-{% endblock content %}
 
+{% endblock content %}

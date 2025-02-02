@@ -31,14 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'getdailydrink'
+    'getdailydrink',
+
 ]
 
 MIDDLEWARE = [
@@ -138,4 +138,4 @@ MEDIA_ROOT = "media/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'users.CustomerUser'
+
