@@ -24,5 +24,11 @@ You need to have the following installed on your system:
 First, clone the project repository to your local machine.
 
 ```bash
-git clone https://github.com/Hcode7/getdailydrink.git
+mkdir hydration_reminder
 cd hydration_reminder
+git clone https://github.com/Hcode7/getdailydrink.git
+python -m venv env
+env\scripts\activate
+pip install -r requirements.txt
+cd hydration_reminder
+python manage.py runserver
