@@ -6,7 +6,7 @@ from .utils import calculate_water_intake
 
 def log_water(request):
     if request.method == 'POST':
-        form = WaterIntakeForm(request.POST)
+        form = WaterIntakeForm(request.POST or None)
         if form.is_valid():
 
             # Extract necessary fields from the user's profile
@@ -21,10 +21,19 @@ def log_water(request):
             
             total_water = round(total_water, 2)
 
-            UserWaterIntake.objects.create(
-                # user=request.user,
-                water_amount=total_water,  
-            )
+            if not request.session.session_key:
+                request.session.create()
+
+            if request.user.is_authenticated:
+                UserWaterIntake.objects.create(
+                    user=request.user,
+                    water_amount=total_water,  
+                )
+            else:
+                UserWaterIntake.objects.create(
+                    session_key=request.session.session_key,
+                    water_amount=total_water,  
+                )
 
             return render(request, 'pages/log_water.html', {'total_water': total_water, 'form': form})
 

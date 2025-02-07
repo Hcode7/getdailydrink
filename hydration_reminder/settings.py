@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'getdailydrink',
+    'getdailydrink.apps.GetdailydrinkConfig',
 
 ]
 
@@ -139,3 +139,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+# 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Use SMTP to send emails
+EMAIL_HOST = 'smtp.gmail.com'  # Gmail SMTP server
+EMAIL_PORT = 587  # TLS port
+EMAIL_USE_TLS = True  # Use TLS encryption
+EMAIL_HOST_USER = 'amineratit6@gmail.com'  # Your Gmail
+EMAIL_HOST_PASSWORD = 'mhni kjww malr uhwo'  # Use an App Password, NOT your real password

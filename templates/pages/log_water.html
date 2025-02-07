@@ -93,7 +93,8 @@
           if ("Notification" in window) {
               Notification.requestPermission().then(permission => {
                   if (permission !== "granted") {
-                      alert("Please allow notifications to receive reminders!");
+                      // alert("Please allow notifications to receive reminders!");
+                      
                   }
               });
           }

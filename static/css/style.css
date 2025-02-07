@@ -186,11 +186,12 @@ footer a:hover {
 
   .container {
     width: 100%;
-    padding: 1rem;
+    padding: 5rem;
   }
 
   .background {
     padding: 0.625rem; /* 10px */
+    
   }
 
   button {
