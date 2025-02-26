@@ -16,11 +16,14 @@
 body,
 html {
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--secondary-color);
+  background: transparent;
   color: var(--dark-color);
+  margin: 0;
+  padding: 0;
 }
 
 .none {
@@ -28,12 +31,12 @@ html {
 }
 
 h1 {
-  font-size: 2.5rem; /* 40px */
-  margin-bottom: 1.25rem; /* 20px */
+  font-size: 2rem; /* Reduced from 2.5rem */
+  margin-bottom: 1rem; /* Reduced from 1.25rem */
 }
 p {
-  font-size: 1.125rem; /* 18px */
-  margin-bottom: 1.25rem; /* 20px */
+  font-size: 1rem; /* Reduced from 1.125rem */
+  margin-bottom: 1rem; /* Reduced from 1.25rem */
 }
 
 .container {
@@ -42,24 +45,41 @@ p {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  width: 6.25rem; /* 100px */
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
 }
 
 .background {
   background: url("/static/images/minecraft-night-moon-rays-sky-temple-stars-hd-wallpaper-preview.jpg")
     no-repeat center center fixed;
   background-size: cover;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   color: var(--secondary-color);
-  padding: 1.25rem; /* 20px */
-  z-index: -1;
+  padding: 1.25rem;
+  z-index: 0;
+  overflow-y: auto;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 0;
 }
 
 button {
@@ -77,18 +97,57 @@ button {
   background-color: var(--secondary-color);
   color: var(--dark-color);
 }
-.welcome-background {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 .question-container {
   display: none;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 1.125rem; /* 18px */
-  border-radius: 0.625rem; /* 10px */
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3); /* 4px 8px */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+  width: 85%;
+  max-width: 350px;
+  margin: 0 auto;
+  margin-bottom: 4rem; /* Increased space before footer */
+}
+
+.welcome-background {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background-color: transparent;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 85%;
+  max-width: 350px;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.welcome-background h1 {
+  color: var(--secondary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 2.2rem;
+}
+
+.welcome-background p {
+  color: var(--secondary-color);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+}
+
+.welcome-background .btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  border: 2px solid var(--secondary-color);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.welcome-background .btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark-color);
+  transform: translateY(-2px);
 }
 
 .flex-container {
@@ -98,13 +157,44 @@ button {
   gap: 0.6rem;
 }
 
-input {
-  padding: 0.8rem;
+input, select {
+  width: 65%;
+  padding: 0.4rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--secondary-color);
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  display: block;
+  font-size: 0.9rem;
 }
 
-input[type="checkbox"] {
-  display: flex;
-  justify-self: start;
+/* Add specific styles for select elements and their options */
+select {
+  appearance: none; /* Remove default appearance */
+  cursor: pointer;
+}
+
+select option {
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background for options */
+  color: var(--secondary-color); /* Light text color */
+  padding: 0.5rem;
+}
+
+/* Add focus styles */
+select:focus, input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.question-group {
+  width: 100%;
+  margin-bottom: 0.8rem; /* Reduced further */
+  text-align: center;
 }
 
 .buttons {
@@ -114,15 +204,34 @@ input[type="checkbox"] {
 }
 
 .result-container {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.6);
   color: var(--secondary-color);
-  padding: 1.875rem; /* 30px */
-  border-radius: 0.625rem; /* 10px */
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3); /* 4px 8px */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 85%;
+  max-width: 350px;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.result-container h2 {
+  color: var(--secondary-color);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.result-container p {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 footer {
@@ -134,9 +243,11 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark-color);
+  background-color: rgba(0, 0, 0, 0.5); /* Made more transparent */
   color: var(--secondary-color);
-  padding: 0.625rem; /* 10px */
+  padding: 0.625rem;
+  z-index: 2;
+  backdrop-filter: blur(5px);
 }
 
 footer a {
@@ -173,44 +284,57 @@ footer a:hover {
   body,
   html {
     flex-direction: column;
-    padding: 1rem;
-  }
-
-  h1 {
-    font-size: 2rem; /* 32px */
-  }
-
-  p {
-    font-size: 1rem; /* 16px */
+    padding: 0.5rem;
+    height: auto;
+    padding-bottom: 60px; /* Added to prevent footer overlap */
   }
 
   .container {
     width: 100%;
-    padding: 5rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
   }
 
   .background {
-    padding: 0.625rem; /* 10px */
-    
+    padding: 0.5rem;
+    align-items: flex-start;
+    overflow-y: auto;
+    padding-bottom: 60px; /* Added to prevent footer overlap */
+  }
+
+  .welcome-background,
+  .question-container,
+  .result-container {
+    width: 95%;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    padding: 0.8rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  input, select {
+    width: 80%;
   }
 
   button {
-    font-size: 1rem;
-    padding: 0.5rem 1rem; /* 8px 16px */
-  }
-
-  .buttons.buttons-active {
-    flex-direction: column;
-    gap: 0.625rem; /* 10px */
-  }
-
-  .result-container {
-    padding: 1.25rem; /* 20px */
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
   }
 
   footer {
+    position: fixed; /* Changed back to fixed */
+    bottom: 0;
     font-size: 0.7rem;
-    padding: 0.5rem; /* 8px */
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
   }
 
   .warning {

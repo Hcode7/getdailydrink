@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,10 +39,45 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'getdailydrink.apps.GetdailydrinkConfig',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', 
 
 ]
 
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# Add the keys you got from Google Console
+SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
+    'client_id': '535842358796-gs2e7v78jpti53si011s6io8m1d8vufl.apps.googleusercontent.com',
+    'secret': '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',
+    'key': ''
+}
+
+
 MIDDLEWARE = [
+    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -122,11 +158,11 @@ import os
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 
 
 MEDIA_URL = "media/"
@@ -146,3 +182,10 @@ EMAIL_PORT = 587  # TLS port
 EMAIL_USE_TLS = True  # Use TLS encryption
 EMAIL_HOST_USER = 'amineratit6@gmail.com'  # Your Gmail
 EMAIL_HOST_PASSWORD = 'mhni kjww malr uhwo'  # Use an App Password, NOT your real password
+
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "home"
+
+LOGOUT_URL = "logout"
+LOGOUT_REDIRECT_URL = "login"

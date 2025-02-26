@@ -1,0 +1,11 @@
+weight,gender,age,climate,activity_level,health_conditions,base_water
+60,male,25,hot,sedentary,none,2.5
+75,female,30,temperate,moderately-active,diabetes,3.0
+90,male,45,cold,very-active,none,4.0
+50,female,20,hot,lightly-active,kidney disease,2.2
+80,male,35,cold,sedentary,none,3.2
+70,female,40,temperate,moderately-active,heart disease,3.5
+85,male,50,hot,very-active,none,4.5
+95,female,55,cold,lightly-active,pregnancy,3.8
+65,male,28,temperate,sedentary,none,2.8
+55,female,33,hot,moderately-active,diabetes,3.1

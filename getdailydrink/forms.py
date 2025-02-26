@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserWaterIntake
+from .models import UserWaterIntake, SaveGoal, WaterTake
 
 
 class WaterIntakeForm(forms.Form):
@@ -24,14 +24,22 @@ class WaterIntakeForm(forms.Form):
     )
     health_conditions = forms.ChoiceField(
         choices=[ 
+            ('none', 'None'),
             ("pregnancy", "Pregnancy"),
             ("diabetes", "Diabetes"),
             ("kidney disease", "Kidney Disease"),
-            ("heart disease", "Heart Disease"),
-            ('none', 'None')
+            ("heart disease", "Heart Disease")
         ], 
         required=False
     )
+    email_frequency = forms.ChoiceField(choices=[
+        (1, 'Every 1 hour'),
+        (2, 'Every 2 hour'),
+        (4, 'Every 4 hour'),
+        (6, 'Every 6 hour'),
+        (12, 'Every 12 hour'),
+        (24, 'Every one day'),
+    ])
 
     # Adding widgets for styling and visibility
     def __init__(self, *args, **kwargs):
@@ -42,3 +50,9 @@ class WaterIntakeForm(forms.Form):
         self.fields['activity_level'].widget.attrs.update({'class': 'border border-gray-500 text-black'})
         self.fields['climate'].widget.attrs.update({'class': 'border border-gray-500 text-black'})
         self.fields['health_conditions'].widget.attrs.update({'class': 'border border-gray-500 text-black'})
+
+
+class GoalWaterForm(forms.ModelForm):
+    class Meta:
+        model = WaterTake
+        fields = ['cup']

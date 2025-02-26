@@ -19,7 +19,7 @@ def send_email_to_drink(sender, instance, created, **kwargs):
                     "💧 Time to Drink Water!",
                     "Stay hydrated! It's time to drink water.",
                     'amineratit6@gmail.com',
-                    [instance.user],
+                    [instance.user.email],
                     fail_silently=False,
                     )
                 print("Email Sent!")

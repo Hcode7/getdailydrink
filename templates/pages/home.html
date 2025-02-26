@@ -1,0 +1,75 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+  <!-- Background Section -->
+  <div class="background">
+
+    <br>
+    <div class="welcome-background">
+    {% if water %}
+    <div  class="result-container">
+        <h2>Your Recommended Daily Water Intake:</h2>
+        <p>{{ water.water_amount }} liters</p>
+        <br>
+        <span class="text-2xl">{{ left_water }}</span>
+
+        <button type="button" id="stop-btn" class="btn" onclick="stopWaterReminder()">Stop Reminder</button>
+    </div>
+    {% endif %}
+      <h1>Welcome to GetDailyDrink</h1>
+      <p>Please take your time to get your daily drink recommendation</p>
+      <a href="{% url 'log_water' %}" class="btn">Start Quiz</a>
+    </div>
+    
+    <br><br><br>
+
+    <script>
+      let reminderTimer; // Store the interval to stop the reminder
+
+      document.addEventListener("DOMContentLoaded", function() {
+          // Ask for notification permission when the page loads
+          if ("Notification" in window) {
+              Notification.requestPermission().then(permission => {
+                  if (permission !== "granted") {
+                    // alert("Please allow notifications to receive reminders!");
+
+                  }
+              });
+          }
+      });
+
+      // Function to start water reminders
+      function startWaterReminder() {
+          let interval = document.getElementById("reminder-interval").value;
+          let timeMs = interval * 60 * 60 * 1000; // Convert hours to milliseconds
+      
+          if (Notification.permission === "granted") {
+              reminderTimer = setInterval(function() {
+                  new Notification("💧 Time to Drink Water!", {
+                      body: `Stay hydrated! It's time to drink water.`,
+                      icon: "https://cdn-icons-png.flaticon.com/512/2913/2913520.png" // Water icon
+                  });
+              }, timeMs);
+      
+              alert(`Water reminder set every ${interval} hour(s)!`);
+          } else {
+              alert("Please enable notifications to receive reminders.");
+          }
+      }
+
+      // Function to stop water reminders
+      function stopWaterReminder() {
+          clearInterval(reminderTimer);
+          alert("Water reminders stopped.");
+      }
+    </script>
+      
+  </div>
+</div>
+
+{% endblock content %}

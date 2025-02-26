@@ -8,33 +8,10 @@
   <!-- Background Section -->
   <div class="background">
 
-    <br>
-    <div class="welcome-background">
-      
-    {% if total_water %}
-    <div id="result" class="result-container">
-        <h2>Your Recommended Daily Water Intake:</h2>
-        <p>{{ total_water }} liters</p>
-        <br>
-        <button type="button" id="stop-btn" class="btn" onclick="stopWaterReminder()">Stop Reminder</button>
-    </div>
-    {% endif %}
-    <br>
-      <h1>Welcome to getDailyDrink</h1>
-      <p>Please take your time to get your daily drink recommendation</p>
-      <button class="btn start-quiz">Start Quiz</button>
-    </div>
-    
-    {% if error %}
-    <script>
-      alert('{{ error }}')
-    </script>
-    {% endif %}
-
     <!-- Water Intake Form -->
-    <form class="question-container" method="POST" action="{% url 'log_water' %}" id="water-form">
+    <form class="questions-container" method="POST" id="water-form">
         {% csrf_token %}
-      
+
         <div class="question-group">
           <label for="gender">What is your gender?</label>
           <br><br>
@@ -65,68 +42,45 @@
           {{ form.weight }}
         </div>
       
-        <div class="question-group">
+        <div class="question-group" style="z-index: 1;">
           <label for="health-conditions">Do you have any health conditions?</label>
           <br><br>
           {{ form.health_conditions }}
         </div>
 
-        <label for="reminder-interval">How often do you want a reminder?</label>
-        <select id="reminder-interval">
-            <option value="1">Every 1 hour</option>
-            <option value="2">Every 2 hours</option>
-            <option value="3">Every 3 hours</option>
-            <option value="5">Every 5 hours</option>
-        </select>
+        <div class="question-group">
+          <label for="reminder-interval">How often do you want a reminder?</label>
+          <br><br>
+          <select id="reminder-interval" name="email_frequency">
+              <option value="1">Every 1 hour</option>
+              <option value="2">Every 2 hours</option>
+              <option value="3">Every 4 hours</option>
+              <option value="5">Every 6 hours</option>
+              <option value="5">Every 12 hours</option>
+              <option value="5">Every one day</option>
+          </select>
+        </div>
         
-        <button type="submit" id="start-btn" class="btn" onclick="startWaterReminder()">Start Reminder</button>
+        <!-- Reminder Button (Doesn't submit form) -->
+        <button type="submit" class="btn" onclick="startWaterReminder()">Start Reminder</button>
         
+        <!-- Submit Button -->
         <button type="submit" class="btn">Submit</button>
     </form>
-    <br><br>
-
-    <script>
-      let reminderTimer; // Store the interval to stop the reminder
-
-      document.addEventListener("DOMContentLoaded", function() {
-          // Ask for notification permission when the page loads
-          if ("Notification" in window) {
-              Notification.requestPermission().then(permission => {
-                  if (permission !== "granted") {
-                      // alert("Please allow notifications to receive reminders!");
-                      
-                  }
-              });
-          }
-      });
-
-      // Function to start water reminders
-      function startWaterReminder() {
-          let interval = document.getElementById("reminder-interval").value;
-          let timeMs = interval * 60 * 60 * 1000; // Convert hours to milliseconds
-      
-          if (Notification.permission === "granted") {
-              reminderTimer = setInterval(function() {
-                  new Notification("💧 Time to Drink Water!", {
-                      body: `Stay hydrated! It's time to drink water.`,
-                      icon: "https://cdn-icons-png.flaticon.com/512/2913/2913520.png" // Water icon
-                  });
-              }, timeMs);
-      
-              alert(`Water reminder set every ${interval} hour(s)!`);
-          } else {
-              alert("Please enable notifications to receive reminders.");
-          }
-      }
-
-      // Function to stop water reminders
-      function stopWaterReminder() {
-          clearInterval(reminderTimer);
-          alert("Water reminders stopped.");
-      }
-    </script>
       
   </div>
 </div>
+
+<script>
+  function startWaterReminder() {
+      let interval = document.getElementById("reminder-interval").value;
+      alert(`Water reminder set for every ${interval} hour(s)!`);
+      
+      // Example: Setting a simple JS timeout (you may use Notification API)
+      setInterval(() => {
+          alert("Time to drink water! 💧");
+      }, interval * 60 * 60 * 1000); // Convert hours to milliseconds
+  }
+</script>
 
 {% endblock content %}

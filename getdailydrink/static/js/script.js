@@ -9,7 +9,7 @@ class Questionnaire {
     ];
     this.showQuestion();
   }
-
+  
   loadEventListeners() {
     document
       .querySelector(".btn.next")
@@ -77,16 +77,10 @@ class Questionnaire {
   }
 }
 
-function startQuiz() {
-  console.log("Quiz started");
-  const questCont = document.querySelector(".question-container");
-  document.querySelector(".welcome-background").style.display = "none";
-  document.querySelector(".warning").classList.add("fade-none");
-  // document.querySelector(".buttons").classList.add("buttons-active");
-  questCont.classList.remove("none");
-  questCont.classList.add("flex-container");
 
-  new Questionnaire();
-}
+const socket = new WebSocket("ws://127.0.0.1:8000/ws/notifications/");
 
-document.querySelector(".btn.start-quiz").addEventListener("click", startQuiz);
+socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    alert(`${data.title}\n${data.message}`);
+};
