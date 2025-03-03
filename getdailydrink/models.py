@@ -38,7 +38,6 @@ class WaterTake(models.Model):
         ('1L', 1.0),
     ]
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
-    session_key = models.CharField(max_length=500, blank=True, null=True)
     cup = models.CharField(max_length=100, choices=[(c[0], c[0]) for c in WATER_CHOICES])
     amount_liters = models.FloatField()
     waterintake = models.FloatField(default=0.0)
@@ -53,7 +52,7 @@ class WaterTake(models.Model):
 
 class SaveGoal(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    session_key = models.CharField(max_length=500, blank=True, null=True)
     water_intake = models.ForeignKey(UserWaterIntake, on_delete=models.CASCADE)
     complete = models.BooleanField(default=False)
     points = models.PositiveIntegerField(default=0)
+

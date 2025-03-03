@@ -2,72 +2,88 @@
 {% load static %}
 
 {% block content %}
+<div class="container mx-auto px-4 py-12">
+  <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Water Intake Quiz</h1>
+    
+    <form class="space-y-8" method="POST" id="water-form">
+      {% csrf_token %}
 
-<div class="container">
-
-  <!-- Background Section -->
-  <div class="background">
-
-    <!-- Water Intake Form -->
-    <form class="questions-container" method="POST" id="water-form">
-        {% csrf_token %}
-
+      {% if not request.user.is_authenticated %}
         <div class="question-group">
-          <label for="gender">What is your gender?</label>
-          <br><br>
+          <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
+            What is your gender?
+          </label>
           {{ form.gender }}
         </div>
-      
         <div class="question-group">
-          <label for="age">What is your age?</label>
-          <br><br>
-          {{ form.age }}
-        </div>
-      
-        <div class="question-group">
-          <label for="activity-level">What is your activity level?</label>
-          <br><br>
-          {{ form.activity_level }}
-        </div>
-      
-        <div class="question-group">
-          <label for="climate">What is the climate like where you live?</label>
-          <br><br>
-          {{ form.climate }}
-        </div>
-      
-        <div class="question-group">
-          <label for="weight">What is your weight (in kg)?</label>
-          <br><br>
+          <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
+            What is your weight?
+          </label>
           {{ form.weight }}
-        </div>
-      
-        <div class="question-group" style="z-index: 1;">
-          <label for="health-conditions">Do you have any health conditions?</label>
-          <br><br>
-          {{ form.health_conditions }}
         </div>
 
         <div class="question-group">
-          <label for="reminder-interval">How often do you want a reminder?</label>
-          <br><br>
-          <select id="reminder-interval" name="email_frequency">
-              <option value="1">Every 1 hour</option>
-              <option value="2">Every 2 hours</option>
-              <option value="3">Every 4 hours</option>
-              <option value="5">Every 6 hours</option>
-              <option value="5">Every 12 hours</option>
-              <option value="5">Every one day</option>
-          </select>
+          <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
+            What is your age?
+          </label>
+          {{ form.age }}
         </div>
+      {% endif %}
+      <div class="question-group">
+        <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
+          What is your activity level?
+        </label>
+        {{ form.activity_level }}
+      </div>
+
+      <div class="question-group">
+        <label class="block text-lg font-semibold text-gray-700 mb-4" for="climate">
+          What is the climate like where you live?
+        </label>
+        {{ form.climate }}
+      </div>
+
+      <div class="question-group">
+        <label class="block text-lg font-semibold text-gray-700 mb-4" for="health-conditions">
+          Do you have any health conditions?
+        </label>
+        {{ form.health_conditions }}
+      </div>
+
+      <div class="question-group">
+        <label class="block text-lg font-semibold text-gray-700 mb-4" for="reminder-interval">
+          How often do you want a reminder?
+        </label>
+        <select id="reminder-interval" name="email_frequency"
+                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+          <option value="1">Every 1 hour</option>
+          <option value="2">Every 2 hours</option>
+          <option value="4">Every 4 hours</option>
+          <option value="6">Every 6 hours</option>
+          <option value="12">Every 12 hours</option>
+          <option value="24">Every one day</option>
+        </select>
+      </div>
+
+      <div class="flex space-x-4 justify-center mt-8">
+        <button type="button" onclick="startWaterReminder()" 
+                class="inline-flex items-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition duration-200">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Start Reminder
+        </button>
         
-        <!-- Reminder Button (Doesn't submit form) -->
-        <button type="submit" class="btn" onclick="startWaterReminder()">Start Reminder</button>
-        
-        <!-- Submit Button -->
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" 
+                class="inline-flex items-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition duration-200">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          Submit
+        </button>
+      </div>
     </form>
-      
   </div>
 </div>
 

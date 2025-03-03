@@ -1,14 +1,20 @@
 from django import forms
+from accounts.models import Profile
 from .models import UserWaterIntake, SaveGoal, WaterTake
 
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('gender', 'age', 'weight', )
 
 class WaterIntakeForm(forms.Form):
     gender = forms.ChoiceField(
         choices=[('male', 'Male'), ('female', 'Female')], 
-        required=True
+        required=False
     )
-    age = forms.IntegerField(min_value=1, max_value=120, required=True)
-    weight = forms.IntegerField(min_value=1, max_value=300, required=True)
+    age = forms.IntegerField(min_value=1, max_value=120, required=False)
+    weight = forms.IntegerField(min_value=1, max_value=300, required=False)
     activity_level = forms.ChoiceField(
         choices=[ 
             ('sedentary', 'Sedentary'),
@@ -44,9 +50,6 @@ class WaterIntakeForm(forms.Form):
     # Adding widgets for styling and visibility
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['gender'].widget.attrs.update({'class': 'border border-gray-500 text-black '})
-        self.fields['age'].widget.attrs.update({'class': 'border border-white text-black', 'min': '1'})
-        self.fields['weight'].widget.attrs.update({'class': 'border border-white text-black', 'min': '1'})
         self.fields['activity_level'].widget.attrs.update({'class': 'border border-gray-500 text-black'})
         self.fields['climate'].widget.attrs.update({'class': 'border border-gray-500 text-black'})
         self.fields['health_conditions'].widget.attrs.update({'class': 'border border-gray-500 text-black'})
