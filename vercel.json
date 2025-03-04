@@ -1,13 +1,16 @@
 {
-  "builds": [{
-    "src": "hydration_reminder/wsgi.py",
-    "use": "@vercel/python"
-  }],
+  "version": 2,
+  "builds": [
+    {
+      "src": "hydration_reminder/wsgi.py",
+      "use": "@vercel/python",
+      "runtime": "edge"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "hydration_reminder/wsgi.py",
-      "runtime": "edge"
+      "dest": "hydration_reminder/wsgi.py"
     }
   ]
 }
