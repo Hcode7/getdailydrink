@@ -1,16 +1,13 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "hydration_reminder/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb", "runtime": "python3.11" }
-    }
-  ],
+  "builds": [{
+    "src": "hydration_reminder/wsgi.py",
+    "use": "@vercel/python"
+  }],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "hydration_reminder/wsgi.py"
+      "dest": "hydration_reminder/wsgi.py",
+      "runtime": "edge"
     }
   ]
 }
