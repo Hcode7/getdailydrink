@@ -41,44 +41,44 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'getdailydrink.apps.GetdailydrinkConfig',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google', 
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google', 
 
 ]
 
-SITE_ID = 1
+# SITE_ID = 1
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
 
-SOCIALACCOUNT_LOGIN_ON_GET = True
+# SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Add the keys you got from Google Console
-SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
-    'client_id': '535842358796-gs2e7v78jpti53si011s6io8m1d8vufl.apps.googleusercontent.com',
-    'secret': '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',
-    'key': ''
-}
+# SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
+#     'client_id': '535842358796-gs2e7v78jpti53si011s6io8m1d8vufl.apps.googleusercontent.com',
+#     'secret': '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',
+#     'key': ''
+# }
 
 
 MIDDLEWARE = [
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -117,8 +117,12 @@ WSGI_APPLICATION = 'hydration_reminder.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'KJVPsEyBCmczjzXEpCXAkzBjhepGKffk',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '47898',
     }
 }
 
